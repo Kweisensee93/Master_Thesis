@@ -5,6 +5,8 @@ import cv2
 
 #1  parse_tps:       Parse TPS files
 #2  load_image:      Get image
+#3  load_config:     Load YAML or JSON config files
+#4  parse_args:      Parse command-line arguments for config file path
 
 def parse_tps(tps_path: Path) -> dict:
     """
@@ -115,3 +117,25 @@ def load_image(img_path: Path | str) -> tuple[np.ndarray, int, int]:
     if img_bgr is None:
         raise FileNotFoundError(f"Cannot read image: {img_path}")
     return img_bgr, img_bgr.shape[0], img_bgr.shape[1]
+
+def load_config(config_path: Path) -> dict:
+    # I have not decided on weather to use YAML or JSON, so I set up both
+    suffix = config_path.suffix.lower()
+    with open(config_path, "r") as f:
+        if suffix in (".yaml", ".yml"):
+            import yaml
+            return yaml.safe_load(f)
+        elif suffix == ".json":
+            import json
+            return json.load(f)
+        else:
+            raise ValueError(f"Unsupported config format: '{suffix}'. Use .yaml or .json.")
+
+def parse_args():
+    import argparse
+    parser = argparse.ArgumentParser(description="Process fish images and TPS data to extract semilandmarks and calculate metrics.")
+
+    parser.add_argument("config", type=Path,
+                        help="Path to config file (.yaml or .json)")
+    return parser.parse_args()
+

@@ -4,7 +4,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pipeline_helpers.config import SEMILANDMARK_CURVE # from config.py
-from pipeline_helpers import parse_tps, load_image # from data_io.py
+from pipeline_helpers import parse_tps, load_image, load_config, parse_args # from data_io.py
 from pipeline_helpers import flip_y, find_anchor_points, get_contour_subset, resample_points, landmark_anchors # from geometry.py
 from pipeline_helpers import crop_to_landmarks # from preprocessing.py
 from pipeline_helpers import calculate_metrics,  export_results # from data_evaluation.py
@@ -13,33 +13,12 @@ from pipeline_helpers import extract_fish_contour, remove_background # from imag
 import numpy as np
 import os
 import pandas as pd
-import argparse
-
-def load_config(config_path: Path) -> dict:
-    # I have not decided on weather to use YAML or JSON, so I set up both
-    suffix = config_path.suffix.lower()
-    with open(config_path, "r") as f:
-        if suffix in (".yaml", ".yml"):
-            import yaml
-            return yaml.safe_load(f)
-        elif suffix == ".json":
-            import json
-            return json.load(f)
-        else:
-            raise ValueError(f"Unsupported config format: '{suffix}'. Use .yaml or .json.")
-
-def parse_args():
-    parser = argparse.ArgumentParser(description="Process fish images and TPS data to extract semilandmarks and calculate metrics.")
-
-    parser.add_argument("config", type=Path,
-                                        help="Path to config file (.yaml or .json)")
-    return parser.parse_args()
 
 # Settings
 debug_01 = False    # Set to True to enable debug prints and visualisations
 AddInfo = False     # Set to True to enable additional info prints of the processing
 GetInfo = True    # Set to True to enable detailed info files
-GetImages = True   # Set to True to enable images with contour and landmarks drawn
+GetImages = True   # Set to True to enable images with contour and landmarks drawn as output
 DefinedFile = "all" # Set to specific image name (without extension) e.g. "CC21L003" or "all"
 Fast_Mode = False   # True = loose slightly on accuracy for faster processing - test for your dataset
 Keep_landmarks_as_anchors = True # If False, the landmark will be moved to the closest contour point.
@@ -58,8 +37,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 if __name__ == "__main__":
     args = parse_args()
-
-    cfg = load_config(args.config)
+    cfg = load_config(args.config) #Fallback to default values, if either no value is presented or no config
 
     debug_01                          = cfg.get("debug_01",                          False)
     AddInfo                           = cfg.get("AddInfo",                           False)
