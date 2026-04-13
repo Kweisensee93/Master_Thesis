@@ -1,0 +1,19 @@
+# Configuration file with default values
+
+# Debug and info settings
+debug_01: false                          # Set to true to enable debug prints and visualisations
+AddInfo: false                           # Set to true to enable additional info prints of the processing
+GetInfo: true                            # Set to true to enable detailed info files
+GetImages: true                          # Set to true to enable images with contour and landmarks drawn as output
+
+# Processing settings
+DefinedFile: "all"                       # Set to specific image name (without extension) e.g. "CC21L003" or "all"
+Fast_Mode: false                         # true = lose slightly on accuracy for faster processing - test for your dataset
+Keep_landmarks_as_anchors: true          # If false, the landmark will be moved to the closest contour point
+Number_of_worst_performers_review: 5     # How many worst performing images to be reviewed as CSV
+
+# Paths
+PROJECT_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/"
+FISH_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/rawdata"
+TPS_FILE: "C:/Users/korbi/Desktop/A_Master_Thesis/rawdata/landmark01.TPS"
+OUTPUT_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/output/investigate2"

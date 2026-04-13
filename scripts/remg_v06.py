@@ -36,17 +36,22 @@ OUTPUT_DIR  = PROJECT_DIR / "output/investigate2"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 if __name__ == "__main__":
-    args = parse_args()
+    args = parse_args() # Variables and paths are defined via YAML or JSON file
     cfg = load_config(args.config) #Fallback to default values, if either no value is presented or no config
 
-    debug_01                          = cfg.get("debug_01",                          False)
-    AddInfo                           = cfg.get("AddInfo",                           False)
-    GetInfo                           = cfg.get("GetInfo",                           True)
-    GetImages                         = cfg.get("GetImages",                         True)
-    DefinedFile                       = cfg.get("DefinedFile",                       "all")
-    Fast_Mode                         = cfg.get("Fast_Mode",                         False)
-    Keep_landmarks_as_anchors         = cfg.get("Keep_landmarks_as_anchors",         True)
-    Number_of_worst_performers_review = cfg.get("Number_of_worst_performers_review", 5)
+    debug_01                          = cfg.get("debug_01",                          False) # Set to True to enable debug prints and visualisations
+    AddInfo                           = cfg.get("AddInfo",                           False) # Set to True to enable additional info prints of the processing
+    GetInfo                           = cfg.get("GetInfo",                           True)  # Set to True to enable detailed info files
+    GetImages                         = cfg.get("GetImages",                         True)  # Set to True to enable images with contour and landmarks drawn as output
+    DefinedFile                       = cfg.get("DefinedFile",                       "all") # Set to specific image name (without extension) e.g. "CC21L003" or "all"
+    Fast_Mode                         = cfg.get("Fast_Mode",                         False) # True = loose slightly on accuracy for faster processing - test for your dataset
+    Keep_landmarks_as_anchors         = cfg.get("Keep_landmarks_as_anchors",         True)  # If False, the landmark will be moved to the closest contour point.
+    Number_of_worst_performers_review = cfg.get("Number_of_worst_performers_review", 5)     # How many worst performing images to be reviewed as CSV
+    PROJECT_DIR                        = Path(cfg.get("PROJECT_DIR",                 "C:/Users/korbi/Desktop/A_Master_Thesis/"))
+    FISH_DIR                           = Path(cfg.get("FISH_DIR",                    PROJECT_DIR / "rawdata"))
+    TPS_FILE                           = Path(cfg.get("TPS_FILE",                    FISH_DIR / "landmark01.TPS"))
+    OUTPUT_DIR                         = Path(cfg.get("OUTPUT_DIR",                  PROJECT_DIR / "output/investigate2"))
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # 1. Get rawdata (images and TPS)
     all_master_results = [] # Accumulator for master CSV
