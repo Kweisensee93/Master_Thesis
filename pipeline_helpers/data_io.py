@@ -120,6 +120,8 @@ def load_image(img_path: Path | str) -> tuple[np.ndarray, int, int]:
 
 def load_config(config_path: Path) -> dict:
     # I have not decided on weather to use YAML or JSON, so I set up both
+    if config_path is None:
+        return {} # Return empty config if no path is provided
     suffix = config_path.suffix.lower()
     with open(config_path, "r") as f:
         if suffix in (".yaml", ".yml"):
@@ -135,7 +137,7 @@ def parse_args():
     import argparse
     parser = argparse.ArgumentParser(description="Process fish images and TPS data to extract semilandmarks and calculate metrics.")
 
-    parser.add_argument("config", type=Path,
-                        help="Path to config file (.yaml or .json)")
+    parser.add_argument("config", type=Path, nargs="?", default=None,
+                        help="Path to config file (.yaml or .json) If ommitted, default values will be used.")
     return parser.parse_args()
 

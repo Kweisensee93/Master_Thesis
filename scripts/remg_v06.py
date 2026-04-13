@@ -14,27 +14,6 @@ import numpy as np
 import os
 import pandas as pd
 
-# Settings
-debug_01 = False    # Set to True to enable debug prints and visualisations
-AddInfo = False     # Set to True to enable additional info prints of the processing
-GetInfo = True    # Set to True to enable detailed info files
-GetImages = True   # Set to True to enable images with contour and landmarks drawn as output
-DefinedFile = "all" # Set to specific image name (without extension) e.g. "CC21L003" or "all"
-Fast_Mode = False   # True = loose slightly on accuracy for faster processing - test for your dataset
-Keep_landmarks_as_anchors = True # If False, the landmark will be moved to the closest contour point.
-Number_of_worst_performers_review = 5 # How many worst performing images to be reviewed as CSV
-
-# README - or don't
-# variables within this script are often set either in the original image space or in a cropped
-# down image space. Hence, it is made explicit by appending _crop or _full to the variable names.
-
-# Paths - may be replaced by a YAML config file later
-PROJECT_DIR = Path("C:/Users/korbi/Desktop/A_Master_Thesis/")
-FISH_DIR    = PROJECT_DIR / "rawdata"
-TPS_FILE    = FISH_DIR / "landmark01.TPS"
-OUTPUT_DIR  = PROJECT_DIR / "output/investigate2"
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
 if __name__ == "__main__":
     args = parse_args() # Variables and paths are defined via YAML or JSON file
     cfg = load_config(args.config) #Fallback to default values, if either no value is presented or no config
