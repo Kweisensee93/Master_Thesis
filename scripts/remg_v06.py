@@ -22,14 +22,15 @@ if __name__ == "__main__":
     AddInfo                           = cfg.get("AddInfo",                           False) # Set to True to enable additional info prints of the processing
     GetInfo                           = cfg.get("GetInfo",                           True)  # Set to True to enable detailed info files
     GetImages                         = cfg.get("GetImages",                         True)  # Set to True to enable images with contour and landmarks drawn as output
-    DefinedFile                       = cfg.get("DefinedFile",                       "all") # Set to specific image name (without extension) e.g. "CC21L003" or "all"
+    DefinedFile                       = cfg.get("DefinedFile",                       "CC21L019") # Set to specific image name (without extension) e.g. "CC21L003" or "all"
     Fast_Mode                         = cfg.get("Fast_Mode",                         False) # True = loose slightly on accuracy for faster processing - test for your dataset
     Keep_landmarks_as_anchors         = cfg.get("Keep_landmarks_as_anchors",         True)  # If False, the landmark will be moved to the closest contour point.
     Number_of_worst_performers_review = cfg.get("Number_of_worst_performers_review", 5)     # How many worst performing images to be reviewed as CSV
+    # Define Paths for the files needed.
     PROJECT_DIR                        = Path(cfg.get("PROJECT_DIR",                 "C:/Users/korbi/Desktop/A_Master_Thesis/"))
     FISH_DIR                           = Path(cfg.get("FISH_DIR",                    PROJECT_DIR / "rawdata"))
     TPS_FILE                           = Path(cfg.get("TPS_FILE",                    FISH_DIR / "landmark01.TPS"))
-    OUTPUT_DIR                         = Path(cfg.get("OUTPUT_DIR",                  PROJECT_DIR / "output/investigate2"))
+    OUTPUT_DIR                         = Path(cfg.get("OUTPUT_DIR",                  PROJECT_DIR / "output/investigate3"))
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # 1. Get rawdata (images and TPS)
@@ -81,7 +82,7 @@ if __name__ == "__main__":
 
         # Step 5: Subset contour between the two anchor points (semilandmark_full)
         subset_crop = get_contour_subset(contour_pts_crop, idx_first, idx_last)
-        if not Keep_landmarks_as_anchors: subset_crop = landmark_anchors(subset_crop, landmarks_full, crop_box)
+        if Keep_landmarks_as_anchors: subset_crop = landmark_anchors(subset_crop, landmarks_full, crop_box)
         semilandmarks_new_crop = resample_points(subset_crop, num_points=10) # get 10 equidistant points along the contour subset
 
         # Step 6: 

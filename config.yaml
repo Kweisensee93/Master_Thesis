@@ -16,4 +16,4 @@ Number_of_worst_performers_review: 5     # How many worst performing images to b
 PROJECT_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/"
 FISH_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/rawdata"
 TPS_FILE: "C:/Users/korbi/Desktop/A_Master_Thesis/rawdata/landmark01.TPS"
-OUTPUT_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/output/investigate2"
+OUTPUT_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/output/yamltest"
