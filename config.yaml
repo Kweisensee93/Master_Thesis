@@ -13,7 +13,7 @@ Keep_landmarks_as_anchors: true          # If false, the landmark will be moved 
 Number_of_worst_performers_review: 5     # How many worst performing images to be reviewed as CSV
 
 # Paths
-PROJECT_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/"
-FISH_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/rawdata"
-TPS_FILE: "C:/Users/korbi/Desktop/A_Master_Thesis/rawdata/landmark01.TPS"
-OUTPUT_DIR: "C:/Users/korbi/Desktop/A_Master_Thesis/output/yamltest"
+PROJECT_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021"
+FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021"
+TPS_FILE: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/Eckert_CC_CL_revised.TPS"
+OUTPUT_DIR: "/storage/scratch/iee_evol/kw23y068/Stickleback1/"

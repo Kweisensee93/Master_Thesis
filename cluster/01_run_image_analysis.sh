@@ -13,4 +13,6 @@
 
 conda activate master_thesis
 
-python ../scripts/remg_v05.py
+python \
+    /storage/homefs/kw23y068/Master_Thesis/scripts/remg_v06.py \
+    /storage/homefs/kw23y068/Master_Thesis/config.yaml
