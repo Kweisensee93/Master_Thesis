@@ -22,7 +22,7 @@ if __name__ == "__main__":
     AddInfo                           = cfg.get("AddInfo",                           False) # Set to True to enable additional info prints of the processing
     GetInfo                           = cfg.get("GetInfo",                           True)  # Set to True to enable detailed info files
     GetImages                         = cfg.get("GetImages",                         True)  # Set to True to enable images with contour and landmarks drawn as output
-    DefinedFile                       = cfg.get("DefinedFile",                       "CC21L019") # Set to specific image name (without extension) e.g. "CC21L003" or "all"
+    DefinedFile                       = cfg.get("DefinedFile",                       "all") # Set to specific image name (without extension) e.g. "CC21L003" or "all"
     Fast_Mode                         = cfg.get("Fast_Mode",                         False) # True = loose slightly on accuracy for faster processing - test for your dataset
     Keep_landmarks_as_anchors         = cfg.get("Keep_landmarks_as_anchors",         True)  # If False, the landmark will be moved to the closest contour point.
     Number_of_worst_performers_review = cfg.get("Number_of_worst_performers_review", 5)     # How many worst performing images to be reviewed as CSV
