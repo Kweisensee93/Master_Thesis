@@ -11,6 +11,8 @@
 #SBATCH --account=gratis
 #SBATCH --wckey=noop
 
+source $(conda info --base)/etc/profile.d/conda.sh
+
 conda activate master_thesis
 
 python \

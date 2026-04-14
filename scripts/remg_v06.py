@@ -37,7 +37,8 @@ if __name__ == "__main__":
     all_master_results = [] # Accumulator for master CSV
     all_detailed_results = [] # Accumulator for detailed CSV about pipeline performance
     tps_data = parse_tps(TPS_FILE)
-    fish_images = sorted(f for f in os.listdir(FISH_DIR) if f.lower().endswith(".jpg"))
+    fish_images = sorted(f for f in os.listdir(FISH_DIR)
+                         if f.lower().endswith(".jpg") and f in tps_data)
     if len(tps_data) != len(fish_images):
         print(f"WARNING: Number of specimens in TPS ({len(tps_data)}) does not match number of images in storage ({len(fish_images)}).")
     if AddInfo: print(f"Found {len(fish_images)} images and {len(tps_data)} TPS entries.")
@@ -53,6 +54,10 @@ if __name__ == "__main__":
         stem = Path(img_name).stem
         if AddInfo: print(f"\nProcessing {img_name} ...")
         data = tps_data.get(img_name, {})
+        #DEBUG EOF
+        if not data:
+            print(f"MISS: repr(img_name)={repr(img_name)}, repr(key)={repr(list(tps_data.keys())[0])}")
+        #DEBUG EOF
         # step 2: crop to landmark-box; retrieve geometry data
         img_bgr, img_h, img_w = load_image(img_path)
         img_cropped, crop_box = crop_to_landmarks(img_bgr, data, img_h, img_w)

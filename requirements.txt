@@ -5,3 +5,4 @@ torch
 torchvision
 pillow
 rembg[cpu]
+pyyaml

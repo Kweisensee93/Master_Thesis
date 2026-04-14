@@ -1,0 +1,11 @@
+
+CondaError: Run 'conda init' before 'conda activate'
+
+Traceback (most recent call last):
+  File "/storage/homefs/kw23y068/Master_Thesis/scripts/remg_v06.py", line 6, in <module>
+    from pipeline_helpers.config import SEMILANDMARK_CURVE # from config.py
+  File "/storage/homefs/kw23y068/Master_Thesis/pipeline_helpers/__init__.py", line 3, in <module>
+    from .data_io import parse_tps, load_image, load_config, parse_args
+  File "/storage/homefs/kw23y068/Master_Thesis/pipeline_helpers/data_io.py", line 4, in <module>
+    import cv2
+ModuleNotFoundError: No module named 'cv2'

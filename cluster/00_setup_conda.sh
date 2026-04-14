@@ -12,10 +12,10 @@
 #SBATCH --wckey=noop
 
 # --- Config ---
-PROJECT="/storage/homefs/kw23y068/master_thesis/pipeline"
+PROJECT="/storage/homefs/kw23y068/Master_Thesis"
 ENV_NAME="master_thesis"
 PYTHON_VERSION="3.13"
-REQUIREMENTS="${PROJECT}/scripts/requirements.txt"
+REQUIREMENTS="${PROJECT}/requirements.txt"
 
 # --- Create conda env if it doesn't exist ---
 if conda env list | grep -q "^${ENV_NAME} "; then

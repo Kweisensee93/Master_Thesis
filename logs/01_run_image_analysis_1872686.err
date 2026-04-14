@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/storage/homefs/kw23y068/Master_Thesis/scripts/remg_v06.py", line 34, in <module>
+    OUTPUT_DIR.mkdir(parents=False, exist_ok=True)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/homefs/kw23y068/.conda/envs/master_thesis/lib/python3.13/pathlib/_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/storage/scratch/iee_evol/kw23y068/Stickleback1'

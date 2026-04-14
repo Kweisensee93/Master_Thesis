@@ -1,0 +1,2 @@
+WARNING: Number of specimens in TPS (2) does not match number of images in storage (886).
+MISS: repr(img_name)='CC21L001.JPG', repr(key)='CC21L003.JPG'
