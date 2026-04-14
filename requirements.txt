@@ -1,0 +1,7 @@
+numpy
+pandas
+opencv-python
+torch
+torchvision
+pillow
+rembg[cpu]
