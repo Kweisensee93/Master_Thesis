@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "/storage/homefs/kw23y068/Master_Thesis/scripts/remg_v06.py", line 62, in <module>
-    img_cropped, crop_box = crop_to_landmarks(img_bgr, data, img_h, img_w)
-                            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/storage/homefs/kw23y068/Master_Thesis/pipeline_helpers/preprocessing.py", line 68, in crop_to_landmarks
-    raise ValueError("No landmarks available – cannot crop.")
-ValueError: No landmarks available – cannot crop.

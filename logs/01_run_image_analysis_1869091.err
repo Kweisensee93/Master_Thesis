@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/storage/homefs/kw23y068/Master_Thesis/scripts/remg_v06.py", line 19, in <module>
-    cfg = load_config(args.config) #Fallback to default values, if either no value is presented or no config
-  File "/storage/homefs/kw23y068/Master_Thesis/pipeline_helpers/data_io.py", line 128, in load_config
-    import yaml
-ModuleNotFoundError: No module named 'yaml'

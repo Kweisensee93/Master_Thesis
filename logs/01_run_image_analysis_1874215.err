@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/storage/homefs/kw23y068/Master_Thesis/scripts/remg_v06.py", line 43, in <module>
-    print(repr(fish_images[0]))
-               ^^^^^^^^^^^
-NameError: name 'fish_images' is not defined
