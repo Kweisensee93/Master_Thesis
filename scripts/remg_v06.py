@@ -31,7 +31,7 @@ if __name__ == "__main__":
     PROJECT_DIR                        = Path(cfg.get("PROJECT_DIR",                 "C:/Users/korbi/Desktop/A_Master_Thesis/"))
     FISH_DIR                           = Path(cfg.get("FISH_DIR",                    PROJECT_DIR / "rawdata"))
     TPS_FILE                           = Path(cfg.get("TPS_FILE",                    FISH_DIR / "landmark01.TPS"))
-    OUTPUT_DIR                         = Path(cfg.get("OUTPUT_DIR",                  PROJECT_DIR / "output/investigate3"))
+    OUTPUT_DIR                         = Path(cfg.get("OUTPUT_DIR",                  PROJECT_DIR / "output/tmp"))
     OUTPUT_DIR.mkdir(parents=False, exist_ok=True)
 
     # 1. Get rawdata (images and TPS)

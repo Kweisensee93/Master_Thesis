@@ -1,5 +1,6 @@
 # pipeline_helpers/data_io.py
 from pathlib import Path
+import pickle
 import numpy as np
 import cv2
 
@@ -141,3 +142,18 @@ def parse_args():
                         help="Path to config file (.yaml or .json) If ommitted, default values will be used.")
     return parser.parse_args()
 
+def load_train_KNN_model(model_path: Path, model_structure, x_train, y_train, K, name, AddInfo = False):
+    import pickle
+    model_path = Path(model_path)
+    model_path.parent.mkdir(parents=False, exist_ok=True)
+    if model_path.exists():
+        if AddInfo: print(f"Loading existing KNN model for {name} from {model_path} …")
+        with open(model_path, "rb") as f:
+            regressor = pickle.load(f)
+    else:
+        if AddInfo: print(f"Training new KNN model for {name} and saving to {model_path} …")
+        regressor = model_structure(k=K)
+        regressor.train(x_train, y_train)
+        with open(model_path, "wb") as f:
+            pickle.dump(regressor, f)   
+    return regressor
