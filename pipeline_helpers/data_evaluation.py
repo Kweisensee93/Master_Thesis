@@ -96,7 +96,7 @@ def draw_information(img_cropped, fish_contour_crop, landmarks_full,
     # 6. Save
     cv2.imwrite(str(output_path), vis_img)
 
-def export_results(res, output_dir, get_info, get_images, defined_file, debug_mode):
+def export_results(res, output_dir, get_info, get_images, defined_file, debug_mode, get_contour = False):
     """
     res: Dictionary containing all geometric and processed data
     """
@@ -106,6 +106,7 @@ def export_results(res, output_dir, get_info, get_images, defined_file, debug_mo
     # A. CSV Outputs
     if get_info and is_target:
         res["img_metrics_df"].to_csv(output_dir / f"{stem}_metrics.csv", index=False)
+    if get_contour and is_target:
         pd.DataFrame(res["contour_full"], columns=["x_full", "y_full"]).to_csv(
             output_dir / f"{stem}_full_contour.csv", index=False
         )
