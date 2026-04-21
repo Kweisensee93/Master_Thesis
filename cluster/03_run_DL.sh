@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=02_run_KNN
-#SBATCH --output=../logs/02_run_KNN_%j.out
-#SBATCH --error=../logs/02_run_KNN_%j.err
+#SBATCH --job-name=02_run_DL
+#SBATCH --output=../logs/02_run_DL_%j.out
+#SBATCH --error=../logs/02_run_DL_%j.err
 #SBATCH --time=00:10:00   # Even with training it was under 5 minutes. Take 10 to be safe. (for 174 images)
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -28,13 +28,37 @@ MONITOR_LOG=$(mktemp /tmp/monitor_XXXX.log)
 ) >> "$MONITOR_LOG" &
 MONITOR_PID=$!
 
-# Main job command
-source $(conda info --base)/etc/profile.d/conda.sh
+###---PATHS---###
+SCRIPTS_DIR=/storage/homefs/kw23y068/Master_Thesis/scripts
+CONFIG=/storage/homefs/kw23y068/Master_Thesis/config.yaml
+MODEL_PATH=/storage/homefs/kw23y068/Master_Thesis/dl_hybrid/hybrid_model.pth
 
+###---CONDA---###
+source $(conda info --base)/etc/profile.d/conda.sh
 conda activate master_thesis
 
+###---Conditional execution---###
+if [ ! -f "$MODEL_PATH" ]; then
+    echo "No trained model found at $MODEL_PATH."
+    echo "Running DL_model.py + DL_train.py first..."
+
+    python "$SCRIPTS_DIR/DL_train.py" "$CONFIG"
+    TRAIN_EXIT=$?
+
+    if [ $TRAIN_EXIT -ne 0 ]; then
+        echo "ERROR: DL_train.py failed with exit code $TRAIN_EXIT. Aborting."
+        kill $MONITOR_PID 2>/dev/null
+        exit $TRAIN_EXIT
+    fi
+
+    echo "Training complete. Model saved to $MODEL_PATH."
+else
+    echo "Trained model found at $MODEL_PATH. Skipping training."
+fi
+
+###---Run prediction---###
 python \
-    /storage/homefs/kw23y068/Master_Thesis/scripts/KNN_v06.py \
+    /storage/homefs/kw23y068/Master_Thesis/scripts/DL_predict.py \
     /storage/homefs/kw23y068/Master_Thesis/config.yaml
 
 EXIT_CODE=$?
