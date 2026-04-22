@@ -88,7 +88,7 @@ if __name__ == "__main__":
 
 
     tps_data    = parse_tps(TPS_FILE)
-    fish_images = sorted(f for f in os.listdir(FISH_DIR) if f.lower().endswith(".jpg"))
+    fish_images = sorted(f for f in os.listdir(FISH_DIR) if f.lower().endswith(".jpg") and f in tps_data)
  
     # Use every 4th image as the validation set (matches DL_learning.py split)
     fish_np  = np.array(fish_images)
