@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=02_run_DL
-#SBATCH --output=../logs/02_run_DL_%j.out
-#SBATCH --error=../logs/02_run_DL_%j.err
+#SBATCH --job-name=03_run_DL
+#SBATCH --output=../logs/03_run_DL_%j.out
+#SBATCH --error=../logs/03_run_DL_%j.err
 #SBATCH --time=00:10:00   # Even with training it was under 5 minutes. Take 10 to be safe. (for 174 images)
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -40,13 +40,13 @@ conda activate master_thesis
 ###---Conditional execution---###
 if [ ! -f "$MODEL_PATH" ]; then
     echo "No trained model found at $MODEL_PATH."
-    echo "Running DL_model.py + DL_train.py first..."
+    echo "Running DL_model.py + DL_learning.py first..."
 
-    python "$SCRIPTS_DIR/DL_train.py" "$CONFIG"
+    python "$SCRIPTS_DIR/DL_learning.py" "$CONFIG"
     TRAIN_EXIT=$?
 
     if [ $TRAIN_EXIT -ne 0 ]; then
-        echo "ERROR: DL_train.py failed with exit code $TRAIN_EXIT. Aborting."
+        echo "ERROR: DL_learning.py failed with exit code $TRAIN_EXIT. Aborting."
         kill $MONITOR_PID 2>/dev/null
         exit $TRAIN_EXIT
     fi

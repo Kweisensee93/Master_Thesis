@@ -6,3 +6,4 @@ torchvision
 pillow
 rembg[cpu]
 pyyaml
+matplotlib

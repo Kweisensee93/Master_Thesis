@@ -18,6 +18,7 @@ PROJECT_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickle
 FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021"
 TPS_FILE: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/Eckert_CC_CL_revised.TPS"
 #OUTPUT_DIR: "/storage/scratch/iee_evol/kw23y068/Stickleback1/"
-OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/KNN/"
+OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/DL/"
 
 KNN_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/KNN_model/"
+DL_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/DL_model/"

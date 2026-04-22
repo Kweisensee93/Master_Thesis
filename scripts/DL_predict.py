@@ -1,3 +1,4 @@
+# DL_predict.py
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -7,15 +8,8 @@ import cv2
 import numpy as np
 import pandas as pd
 from DL_model import HybridFishNet
-from pipeline_helpers import crop_to_landmarks, flip_y, parse_tps, euclidean, denormalise_landmarks_relative
+from pipeline_helpers import crop_to_landmarks, flip_y, parse_tps, euclidean, denormalise_landmarks_relative, parse_args, load_config
 
-# ── Settings ──────────────────────────────────────────────────────────────────
-PROJECT_DIR = Path("C:/Users/korbi/Desktop/A_Master_Thesis/")
-FISH_DIR    = PROJECT_DIR / "rawdata"
-TPS_FILE    = FISH_DIR / "landmark01.TPS"
-MODEL_PATH  = PROJECT_DIR / "output/dl_hybrid/hybrid_model.pth"
-OUTPUT_DIR  = PROJECT_DIR / "output/dl_hybrid"
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def predict_new(img_path, tps_data, model_path, target_size=(270, 60)):
     """
@@ -71,6 +65,16 @@ def predict_new(img_path, tps_data, model_path, target_size=(270, 60)):
     return pred.numpy().reshape(10, 2)
 
 if __name__ == "__main__":
+    args = parse_args() # Variables and paths are defined via YAML or JSON file
+    cfg = load_config(args.config) #Fallback to default values, if either no value is
+
+        # Define Paths for the files needed.
+    PROJECT_DIR     = Path(cfg.get("PROJECT_DIR",   "C:/Users/korbi/Desktop/A_Master_Thesis/"))
+    FISH_DIR        = Path(cfg.get("FISH_DIR",      PROJECT_DIR / "rawdata"))
+    TPS_FILE        = Path(cfg.get("TPS_FILE",      FISH_DIR / "landmark01.TPS"))
+    OUTPUT_DIR      = Path(cfg.get("OUTPUT_DIR",    PROJECT_DIR / "output/tmp"))
+    OUTPUT_DIR.mkdir(parents=False, exist_ok=True)
+
     import os
  
     tps_data    = parse_tps(TPS_FILE)
