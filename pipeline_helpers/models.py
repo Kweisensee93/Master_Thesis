@@ -1,3 +1,4 @@
+#models.py
 # The Thesis developed more towards a comparison of different approaches / models
 # Therefore, the models are stored within this file
 
@@ -10,6 +11,7 @@
 
 import torch
 import torch.nn as nn
+import numpy as np
 
 class KNNSemiLandmarkRegressor:
     """
@@ -147,3 +149,4 @@ class HybridFishNet(nn.Module):
         anchor_features = self.anchor_mlp(anchors)
         x = torch.cat((img_features, anchor_features), dim=1)
         return self.combined(x)
+

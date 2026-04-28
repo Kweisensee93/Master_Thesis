@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=01_run_image_analysis
-#SBATCH --output=../logs/01_run_image_analysis_%j.out
-#SBATCH --error=../logs/01_run_image_analysis_%j.err
-#SBATCH --time=00:15:00   # 4.1 seconds per image, 100 images = 410 seconds = ~7 minutes. (take 8 minutes to be safe)
+#SBATCH --job-name=04_run_DLModels
+#SBATCH --output=../logs/04_run_DLModels_%j.out
+#SBATCH --error=../logs/04_run_DLModels_%j.err
+#SBATCH --time=00:30:00   # Even with training it was under 5 minutes. Take 10 to be safe. (for 174 images)
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=2   # Max usage is around 130% - Hence 2 CPUs to be safe
-#SBATCH --mem=1750M     # Max usage is around 1.4 G (per image)
+#SBATCH --cpus-per-task=2   # Max usage is around 60% - Hence 2 CPUs to be safe
+#SBATCH --mem=4000M     # Max usage is around 1.1 G (per image)
 #SBATCH --partition=epyc2
 #SBATCH --account=gratis
 #SBATCH --wckey=noop
@@ -34,7 +34,7 @@ source $(conda info --base)/etc/profile.d/conda.sh
 conda activate master_thesis
 
 python \
-    /storage/homefs/kw23y068/Master_Thesis/scripts/remg_v07.py \
+    /storage/homefs/kw23y068/Master_Thesis/scripts/DL_models.py \
     /storage/homefs/kw23y068/Master_Thesis/config.yaml
 
 EXIT_CODE=$?
