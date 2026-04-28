@@ -92,7 +92,8 @@ def parse_tps(tps_path: Path) -> dict:
                 img_name = os.path.basename(full_path)
                 current["image"] = img_name
                 specimens[img_name] = current
-                current = {}
+                # current = {}  # Initially, "IMAGE="" was expected as the separator
+                # However "LM =" is the first line per specimen, so we reload safely at the end
                 continue
 
             if line.upper().startswith("ID="):
@@ -105,6 +106,11 @@ def parse_tps(tps_path: Path) -> dict:
                 except ValueError:
                     pass
                 continue
+
+    if current and "image" in current and current["image"] not in specimens:
+        specimens[current["image"]] = current
+    if current and "image" in current:
+        specimens[current["image"]] = current
 
     return specimens
 

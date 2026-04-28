@@ -110,8 +110,16 @@ if __name__ == "__main__":
 
         # Step 6: 
         # 6.1. Get Ground Truth (GT) semilandmarks from TPS (full image space)
-        gt_semi_full = flip_y(data.get("semi_landmarks", [[]])[SEMILANDMARK_CURVE], img_h)
-        gt_semi_full = gt_semi_full[::-1] # reverse order to match contour direction (comment out if needed)
+        #gt_semi_full = flip_y(data.get("semi_landmarks", [[]])[SEMILANDMARK_CURVE], img_h)
+        #gt_semi_full = gt_semi_full[::-1] # reverse order to match contour direction (comment out if needed)
+        # fails if no curve is given. More safe approach below:
+        all_curves = data.get("semi_landmarks", [])
+        if all_curves and len(all_curves) > SEMILANDMARK_CURVE:
+            gt_semi_full = flip_y(all_curves[SEMILANDMARK_CURVE], img_h)
+            gt_semi_full = gt_semi_full[::-1] # reverse order to match contour direction (comment out if needed)
+        else:
+            gt_semi_full = [] # No GT available for this image
+
         semilandmarks_new_full = semilandmarks_new_crop + np.array([ox, oy], dtype=np.float32) # already in crop space = full space now
         contour_full   = fish_contour_crop.reshape(-1, 2).astype(np.float32) + np.array([ox, oy], dtype=np.float32)
         # 6.2. Calculate metrics

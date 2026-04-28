@@ -61,7 +61,17 @@ def crop_to_landmarks(
     crop_box    : (min_x, max_x, min_y, max_y) in original image coords
     """
     landmarks      = flip_y(data.get("landmarks",      []), img_h)
-    semi_landmarks = flip_y(data.get("semi_landmarks", [[]])[semilandmark_curve], img_h)
+    #semi_landmarks = flip_y(data.get("semi_landmarks", [[]])[semilandmark_curve], img_h)
+    # Fails if no curves exist, so we handle it more robust:
+    # First we get all curves, then we check if the requested curve index exists before trying to flip it.
+    # If it doesn't exist, we just use an empty list for semi_landmarks.
+    # If this doesn't impress you, I have way more disappointments at the ready
+    all_curves = data.get("semi_landmarks", [])
+    if all_curves and len(all_curves) > semilandmark_curve:
+        semi_landmarks = flip_y(all_curves[semilandmark_curve], img_h)
+    else:
+        semi_landmarks = [] # Fallback if no curves exist
+
     all_coords     = landmarks + semi_landmarks
 
     if not all_coords:
