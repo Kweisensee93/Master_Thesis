@@ -64,6 +64,12 @@ if __name__ == "__main__":
         # Real data contains some landmarks that are outside the image boundaries
         # To prevent crashes, we drop images with out-of-bounds landmarks for now; Future: implement a more robust cropping that can handle this
         raw_landmarks = data.get("landmarks", [])
+        if len(raw_landmarks) == 0:
+            print(f"WARNING: No landmarks found for {img_name}, skipping this image.")
+            continue
+        if len(raw_landmarks) != 13:    ### The code has 13 landmarks hardcoded for now !!!
+            print(f"WARNING: Expected 13 landmarks for {img_name}, but found {len(raw_landmarks)}. Skipping this image.")
+            continue
         invalid_landmarks = [
             (x, y) for x, y in raw_landmarks
             if x <= 0 or x >= img_w or y <= 0 or y >= img_h

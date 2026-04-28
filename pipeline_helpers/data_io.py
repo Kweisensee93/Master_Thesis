@@ -3,6 +3,7 @@ from pathlib import Path
 import pickle
 import numpy as np
 import cv2
+import os
 
 #1  parse_tps:       Parse TPS files
 #2  load_image:      Get image
@@ -87,7 +88,8 @@ def parse_tps(tps_path: Path) -> dict:
 
             if line.upper().startswith("IMAGE="):
                 reading_lm = reading_curve = False
-                img_name = line.split("=", 1)[1].strip()
+                full_path = line.split("=", 1)[1].strip() # Previously this was used as img_name
+                img_name = os.path.basename(full_path)
                 current["image"] = img_name
                 specimens[img_name] = current
                 current = {}
