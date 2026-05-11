@@ -2,7 +2,7 @@
 #SBATCH --job-name=01_run_image_analysis
 #SBATCH --output=../logs/01_run_image_analysis_%j.out
 #SBATCH --error=../logs/01_run_image_analysis_%j.err
-#SBATCH --time=00:15:00   # 4.1 seconds per image, 100 images = 410 seconds = ~7 minutes. (take 8 minutes to be safe)
+#SBATCH --time=00:20:00   # 4.1 seconds per image, 100 images = 410 seconds = ~7 minutes. (take 8 minutes to be safe)
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2   # Max usage is around 130% - Hence 2 CPUs to be safe
@@ -34,7 +34,7 @@ source $(conda info --base)/etc/profile.d/conda.sh
 conda activate master_thesis
 
 python \
-    /storage/homefs/kw23y068/Master_Thesis/scripts/remg_v07.py \
+    /storage/homefs/kw23y068/Master_Thesis/scripts/rembg_v08.py \
     /storage/homefs/kw23y068/Master_Thesis/config.yaml
 
 EXIT_CODE=$?
