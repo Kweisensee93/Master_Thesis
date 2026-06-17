@@ -121,6 +121,8 @@ if __name__ == "__main__":
         subset_crop = get_contour_subset(contour_pts_crop, idx_first, idx_last)
 
         # use the Savitzky-Golay filter to smooth; windows length must be odd
+
+
         savgol_filter_window = int(len(subset_crop) * 0.15)
         if savgol_filter_window % 2 == 0:
             savgol_filter_window += 1

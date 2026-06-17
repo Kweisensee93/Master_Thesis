@@ -6,7 +6,7 @@ from .preprocessing import crop_to_landmarks, normalise_landmarks, denormalise_l
 from .image_operations import extract_fish_contour, remove_background
 from .data_evaluation import calculate_metrics, draw_information, export_results
 from .normalisation import get_lm_basis, normalise_landmarks_relative, denormalise_landmarks_relative
-from .models import SimpleFishMLP, HybridFishNet, KNNSemiLandmarkRegressor
+from .models import SimpleFishMLP, HybridFishNet, KNNSemiLandmarkRegressor, FishGNN, FishViT
 
 
 __all__ = [
@@ -43,4 +43,6 @@ __all__ = [
     "SimpleFishMLP",
     "HybridFishNet",
     "KNNSemiLandmarkRegressor",
+    "FishGNN",
+    "FishViT"
 ]

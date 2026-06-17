@@ -6,6 +6,8 @@
 # 1. KNN regressor
 # 2. FNN / MLP (SimpleFishMLP)
 # 3. Hybrid CNN + MLP (HybridFishNet)
+# 4. GCN (Graph Convolutional Network) (FishGNN)
+# 5. ViT (Vision Transformer) (FishViT)
 # Options:
 # U-Net (stacked hourglass); GCN (Graph Convolutional Network); ViT (Vision Transformer)
 
@@ -149,4 +151,104 @@ class HybridFishNet(nn.Module):
         anchor_features = self.anchor_mlp(anchors)
         x = torch.cat((img_features, anchor_features), dim=1)
         return self.combined(x)
+
+class FishGNN(nn.Module):
+    """
+    Graph neural network over a chain of `n_semi` nodes.
+
+    The graph is a 1-D path (semilandmark i connected to i-1 and i+1). Each
+    node is initialised at its linear-interpolation position between the two
+    anchors, and message passing along the chain refines those positions.
+    A dense, symmetrically-normalised adjacency (Kipf & Welling GCN) is used,
+    so no torch_geometric dependency is required. (Swap in a real GCNConv if
+    you prefer; the interface is identical.)
+
+    Input : anchors (B, 4)        – same input as the MLP, by design.
+    Output: (B, output_dim)
+    """
+    def __init__(self, output_dim: int = 20, hidden: int = 64, n_layers: int = 3):
+        super().__init__()
+        self.n_nodes = output_dim // 2
+
+        # Chain adjacency + self-loops, symmetrically normalised: D^-1/2 A D^-1/2
+        A = torch.eye(self.n_nodes)
+        for i in range(self.n_nodes - 1):
+            A[i, i + 1] = 1.0
+            A[i + 1, i] = 1.0
+        deg_inv_sqrt = A.sum(1).pow(-0.5)
+        A_norm = deg_inv_sqrt.unsqueeze(1) * A * deg_inv_sqrt.unsqueeze(0)
+        self.register_buffer("A_norm", A_norm)
+
+        # Node feature = [t, interp_x, interp_y, a1x, a1y, a13x, a13y] -> 7 dims
+        in_feat = 7
+        self.gcn = nn.ModuleList()
+        prev = in_feat
+        for _ in range(n_layers):
+            self.gcn.append(nn.Linear(prev, hidden))
+            prev = hidden
+        self.head = nn.Linear(hidden, 2)
+
+    def _node_features(self, anchors):
+        B = anchors.shape[0]
+        a1, a13 = anchors[:, :2], anchors[:, 2:]
+        t = torch.linspace(0, 1, self.n_nodes, device=anchors.device)        # (N,)
+        interp = (a1.unsqueeze(1) * (1 - t).view(1, -1, 1)
+                  + a13.unsqueeze(1) * t.view(1, -1, 1))                      # (B,N,2)
+        t_feat  = t.view(1, -1, 1).expand(B, -1, -1)                          # (B,N,1)
+        a1_rep  = a1.unsqueeze(1).expand(-1, self.n_nodes, -1)               # (B,N,2)
+        a13_rep = a13.unsqueeze(1).expand(-1, self.n_nodes, -1)              # (B,N,2)
+        return torch.cat([t_feat, interp, a1_rep, a13_rep], dim=-1)          # (B,N,7)
+
+    def forward(self, anchors):
+        H = self._node_features(anchors)
+        for lin in self.gcn:
+            H = torch.einsum("ij,bjf->bif", self.A_norm, H)   # aggregate neighbours
+            H = torch.relu(lin(H))                            # transform
+        out = self.head(H)                                    # (B, N, 2)
+        return out.reshape(out.shape[0], -1)                  # (B, output_dim)
+
+
+# ── Vision transformer (+ anchor token) ────────────────────────────────────
+class FishViT(nn.Module):
+    """
+    Small ViT on the letterboxed crop, with the anchors injected as an extra
+    learnable token (analogous to a CLS token). The anchor-token output feeds
+    the regression head.
+
+    Input : img (B, H, W, C), anchors (B, 4)
+    Output: (B, output_dim)
+
+    patch=15 divides both 60 and 270 -> 4 x 18 = 72 patches (+1 anchor token).
+    """
+    def __init__(self, output_dim: int = 20, input_shape=(3, 60, 270),
+                 patch: int = 15, dim: int = 64, depth: int = 4,
+                 heads: int = 4, mlp_dim: int = 128, dropout: float = 0.1):
+        super().__init__()
+        C, H, W = input_shape
+        assert H % patch == 0 and W % patch == 0, "patch must divide H and W"
+
+        self.patch_embed = nn.Conv2d(C, dim, kernel_size=patch, stride=patch)
+        n_patches = (H // patch) * (W // patch)
+
+        self.anchor_proj = nn.Linear(4, dim)
+        self.pos_emb     = nn.Parameter(torch.randn(1, n_patches + 1, dim) * 0.02)
+
+        layer = nn.TransformerEncoderLayer(
+            d_model=dim, nhead=heads, dim_feedforward=mlp_dim,
+            dropout=dropout, batch_first=True, activation="gelu",
+        )
+        self.encoder = nn.TransformerEncoder(layer, num_layers=depth)
+        self.norm    = nn.LayerNorm(dim)
+        self.head    = nn.Sequential(
+            nn.Linear(dim, mlp_dim), nn.GELU(),
+            nn.Linear(mlp_dim, output_dim),
+        )
+
+    def forward(self, img, anchors):
+        x = self.patch_embed(img.permute(0, 3, 1, 2))     # (B, dim, h, w)
+        x = x.flatten(2).transpose(1, 2)                  # (B, n_patches, dim)
+        anchor_tok = self.anchor_proj(anchors).unsqueeze(1)
+        x = torch.cat([anchor_tok, x], dim=1) + self.pos_emb
+        x = self.encoder(x)
+        return self.head(self.norm(x[:, 0]))              # anchor-token -> head
 

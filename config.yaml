@@ -16,8 +16,8 @@ Number_of_worst_performers_review: 5     # How many worst performing images to b
 # Paths
 PROJECT_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2020/Destination_Lakes_2021"
 #FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021"
-FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/"
-TPS_FILE: "/storage/homefs/kw23y068/Master_Thesis/TPS_copies/CC_CL_curated.TPS"
+FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2025/CC_25/cropped"
+TPS_FILE: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2025/loop_prediction_cropped_CC_2025.tps"
 #01
 # /storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/Eckert_CC_CL_revised.TPS
 #02
@@ -31,15 +31,17 @@ TPS_FILE: "/storage/homefs/kw23y068/Master_Thesis/TPS_copies/CC_CL_curated.TPS"
 #06
 # /storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/recipient2021_Eckert.TPS
 #OUTPUT_DIR: "/storage/scratch/iee_evol/kw23y068/Stickleback1/"
-OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/rembg_savgol/"
+#OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/rembg_savgol/"
+OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/"
 
 KNN_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/KNN_model/"
 DL_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/DL_model/"
 
-model_type: "hybrid"     # knn | mlp | hybrid
-epochs: 200
-batch_size: 16
-lr: 0.0005
+model_type: "hybrid"     # knn | mlp | cnn | gnn | vit   ("hybrid" is an alias for cnn)
+epochs: 200              # ignored for knn
+batch_size: 16           # ignored for knn
+lr: 0.0005               # ignored for knn
+k: 5                     # neighbours for knn (ignored otherwise)
 
 # So far analyzed by rembg:
 # /storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2022/

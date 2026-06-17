@@ -34,7 +34,7 @@ source $(conda info --base)/etc/profile.d/conda.sh
 conda activate master_thesis
 
 python \
-    /storage/homefs/kw23y068/Master_Thesis/scripts/DL_models.py \
+    /storage/homefs/kw23y068/Master_Thesis/scripts/DL_models_run_v01.py \
     /storage/homefs/kw23y068/Master_Thesis/config.yaml
 
 EXIT_CODE=$?
