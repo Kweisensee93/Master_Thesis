@@ -152,7 +152,7 @@ def main(model_type="cnn", output_dir=None, fish_dir=None, tps_file=None,
     save_path  = model_path_for(output_dir, mt)
 
     tps_data    = parse_tps(tps_file)
-    fish_images = sorted(f for f in os.listdir(fish_dir) if f.lower().endswith(".jpg") and f in tps_data) #relieve! the and argument fixes the shifts since manual TPS curation 
+    fish_images = sorted(f for f in os.listdir(fish_dir) if f.lower().endswith(".jpg"))
     fish_np     = np.array(fish_images)
     mask        = np.arange(len(fish_np)) % 4 == 3            # every 4th -> validation
 

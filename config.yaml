@@ -15,9 +15,9 @@ Number_of_worst_performers_review: 5     # How many worst performing images to b
 
 # Paths
 PROJECT_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2020/Destination_Lakes_2021"
-#FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021"
-FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2025/CC_25/cropped"
-TPS_FILE: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2025/loop_prediction_cropped_CC_2025.tps"
+FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021"
+#FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2025/CC_25/cropped"
+TPS_FILE: "/storage/homefs/kw23y068/Master_Thesis/TPS_copies/CC_CL_curated.TPS"
 #01
 # /storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/Eckert_CC_CL_revised.TPS
 #02

@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 
 from pipeline_helpers import KNNSemiLandmarkRegressor  # noqa: F401 (used via pickle)
-from fish_dl_models import SimpleFishMLP, HybridFishNet, FishGNN, FishViT  # noqa: F401
+from pipeline_helpers import SimpleFishMLP, HybridFishNet, FishGNN, FishViT  # noqa: F401
 from DL_models_learning import (
     main as train_main, build_model, model_path_for,
     SUPPORTED_MODELS, canonical, _IMAGE_MODELS, _ANCHOR_MODELS,
