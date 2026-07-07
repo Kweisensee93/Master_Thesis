@@ -172,93 +172,6 @@ def build_dataset(
     return (np.stack(images_list), np.stack(bare_list), np.stack(rel_list), 
             crop_boxes, lmark_list, names)
 
-
-class KNNSemiLandmarkRegressor:
-    """
-    K-nearest-neighbour regressor for semi-landmark prediction (default k=5).
-
-    Extends the 1-NN approach from the cats-vs-dogs notebook to K neighbours:
-    - Training  : memorise all (image, semi_landmark_coords) pairs  ← identical
-    - Prediction: find the K closest training images by mean absolute pixel
-                  distance, then return the MEAN of their semi-landmark
-                  coordinate vectors as the prediction.
-
-    Why averaging instead of majority vote?
-        Semi-landmark coordinates are continuous values, not class labels.
-        Averaging the K neighbours smooths out outliers – if one of the K
-        nearest images had a slightly unusual curve placement, the other four
-        pull the prediction back toward a sensible position.  With k=1 a
-        single atypical training specimen would dominate the prediction entirely.
-
-    Because semi-landmark coordinates are stored in the LM1→LM13 relative
-    coordinate system (pose-invariant), averaging neighbours produces
-    meaningful results even when fish appear at different positions/scales/
-    orientations across images.
-    For readability, this custom regressor is implemented. Later on we may use:
-    from sklearn.neighbors import KNeighborsRegressor
-    """
-
-    def __init__(self, k: int = 5):
-        if k < 1:
-            raise ValueError(f"k must be >= 1, got {k}")
-        self.k             = k
-        self.train_images: np.ndarray | None = None   # (N, H, W, C) float32
-        self.train_semi:   np.ndarray | None = None   # (N, n_semi*2) float32
-
-    def train(
-        self,
-        images: np.ndarray,
-        semi_landmark_coords: np.ndarray,
-    ) -> None:
-        """
-        Store training images and their normalised semi-landmark coordinates.
-
-        Parameters
-        ----------
-        images               : (N, H, W, C) float32 array of cropped images
-        semi_landmark_coords : (N, n_semi*2) float32 array – each row is the
-                               flat relative [t0,d0,t1,d1,…] vector for one
-                               specimen, produced by normalise_landmarks_relative()
-        """
-        if len(images) < self.k:
-            raise ValueError(
-                f"Training set ({len(images)} images) is smaller than k={self.k}."
-            )
-        self.train_images = images
-        self.train_semi   = semi_landmark_coords
-
-    def predict(self, image: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """
-        Predict semi-landmark coordinates for a single query image.
-
-        Ranks all training images by mean absolute pixel distance, selects the
-        K closest, and returns the unweighted mean of their semi-landmark
-        coordinate vectors.
-
-        Parameters
-        ----------
-        image : (H, W, C) float32 array – one cropped query image
-
-        Returns
-        -------
-        predicted_semi  : (n_semi*2,) float32 – mean relative coords of K neighbours
-        k_distances     : (k,) float32        – MAD distances to each neighbour
-        k_indices       : (k,) int            – indices of the K neighbours in
-                                                the training set, nearest first
-        """
-        # Vectorised MAD across all training images
-        distances = np.mean(np.abs(self.train_images - image), axis=(1, 2, 3))
-
-        # Indices of the k smallest distances, sorted nearest-first
-        k_indices   = np.argsort(distances)[: self.k]
-        k_distances = distances[k_indices]
-
-        # Average the semi-landmark vectors of the K neighbours
-        # Shape: (k, n_semi*2) → mean over axis 0 → (n_semi*2,)
-        predicted_semi = self.train_semi[k_indices].mean(axis=0)
-
-        return predicted_semi, k_distances, k_indices
-
 # For DL approach, we need a resized dataset:
 def build_dataset_resized(
     image_names: list | np.ndarray,
@@ -359,3 +272,15 @@ def build_dataset_hybrid(image_names, fish_dir, tps_data, target_size=(270, 60))
         names.append(name)
 
     return np.stack(images_list), np.stack(anchor_list), np.stack(rel_list), names
+
+def build_dataset_mlp(image_names, fish_dir, tps_data, target_size=(270, 60)):
+    """Anchors + targets only (drops the image array from build_dataset_hybrid).
+
+    Returns
+    -------
+    x_anch : (N, 4) float32   – flattened anchor coords (LM1, LM13)
+    y      : (N, n_semi, 2)   – relative semilandmark targets
+    names  : list[str]
+    """
+    _x_img, x_anch, y, names = build_dataset_hybrid(image_names, fish_dir, tps_data, target_size)
+    return x_anch, y, names

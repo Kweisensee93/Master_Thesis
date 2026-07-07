@@ -25,7 +25,7 @@ import matplotlib.pyplot as plt
 
 from pipeline_helpers import KNNSemiLandmarkRegressor
 from pipeline_helpers import parse_tps, build_dataset_hybrid, build_dataset_mlp
-from fish_dl_models import SimpleFishMLP, HybridFishNet, FishGNN, FishViT
+from pipeline_helpers import SimpleFishMLP, HybridFishNet, FishGNN, FishViT
 
 # ── Defaults ───────────────────────────────────────────────────────────────
 EPOCHS        = 200

@@ -37,7 +37,7 @@ OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/"
 KNN_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/KNN_model/"
 DL_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/DL_model/"
 
-model_type: "hybrid"     # knn | mlp | cnn | gnn | vit   ("hybrid" is an alias for cnn)
+model_type: "vit"     # knn | mlp | cnn | gnn | vit   ("hybrid" is an alias for cnn)
 epochs: 200              # ignored for knn
 batch_size: 16           # ignored for knn
 lr: 0.0005               # ignored for knn

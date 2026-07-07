@@ -15,7 +15,8 @@
 PROJECT="/storage/homefs/kw23y068/Master_Thesis"
 ENV_NAME="master_thesis"
 PYTHON_VERSION="3.13"
-REQUIREMENTS="${PROJECT}/requirements.txt"
+REQUIREMENTS="${PROJECT}/requirements_libraries.txt"
+# The libraries are not versioned, to do so use the requirements_pipreqs.txt file instead.
 
 # --- Create conda env if it doesn't exist ---
 if conda env list | grep -q "^${ENV_NAME} "; then
