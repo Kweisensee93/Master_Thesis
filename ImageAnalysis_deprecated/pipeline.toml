@@ -1,0 +1,22 @@
+[project]
+name = "Semilandmark detection"
+version = "0.01"
+requires-python = ">=3.14.2"
+author = [
+    {name = "Korbinian Weisensee" }
+]
+
+dependencies = [
+    "pyyaml >= 6.0.3",
+    "pillow >= 12.1.0",
+    "opencv-python >= 4.13.0.90",
+    "numpy >= 2.4.1",
+]
+
+[project.scripts]
+preprocessing = "pipeline_01.py"
+apply_filter = "pipeline_02.py"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pipeline_helpers*", "scripts*"]

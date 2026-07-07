@@ -1,0 +1,26 @@
+image:
+  name: CC21L032.JPG
+  path: C:/Users/korbi/Desktop/A_Master_Thesis/rawdata/
+output:
+  path: C:/Users/korbi/Desktop/A_Master_Thesis/output/
+tps:
+  path: C:/Users/Korbi/Desktop/A_Master_Thesis/
+  name: landmark01.TPS
+parameters_01:
+  CLAHE_default:
+    clipLimit: 2
+    tileGridSize: 8
+  CLAHE:
+    clipLimit: 8
+    tileGridSize: 8
+  Blur_default:
+    type: Gaussian
+    ksize: 5
+  Blur:
+    valid:
+    - Averaging
+    - Gaussian
+    - Median
+    - Bilateral
+    type: Averaging
+    ksize: 15

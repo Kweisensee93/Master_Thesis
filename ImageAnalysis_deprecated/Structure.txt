@@ -1,0 +1,13 @@
+Project Structure:
+==================
+
+Project-folder/
+├── pipeline_helpers/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── image_io.py
+│   ├── landmark_utils.py
+│   └── preprocessing.py
+├── scripts/
+│   └── pipeline_01.py
+└── Outline_Parameters.yaml
