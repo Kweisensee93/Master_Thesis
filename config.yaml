@@ -32,7 +32,7 @@ TPS_FILE: "/storage/homefs/kw23y068/Master_Thesis/TPS_copies/CC_CL_curated.TPS"
 # /storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/recipient2021_Eckert.TPS
 #OUTPUT_DIR: "/storage/scratch/iee_evol/kw23y068/Stickleback1/"
 #OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/rembg_savgol/"
-OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/"
+OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_comparison/"
 
 KNN_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/KNN_model/"
 DL_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/DL_model/"
