@@ -62,7 +62,7 @@ def main():
  
     PROJECT_DIR = Path(cfg.get("PROJECT_DIR", "C:/Users/korbi/Desktop/A_Master_Thesis/"))
     OUTPUT_DIR  = Path(cfg.get("OUTPUT_DIR",  PROJECT_DIR / "output/tmp"))
-    ADAPTER_OUT = Path(cfg.get("REMBG_ADAPTER_OUTPUT_DIR", OUTPUT_DIR))
+    ADAPTER_OUT = Path(cfg.get("REMBG_ADAPTER_OUTPUT_DIR", OUTPUT_DIR / "summary"))
     ADAPTER_OUT.mkdir(parents=True, exist_ok=True)
  
     method       = str(cfg.get("rembg_method_name", "rembg"))

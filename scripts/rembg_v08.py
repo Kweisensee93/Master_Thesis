@@ -60,7 +60,7 @@ if __name__ == "__main__":
     # for testing: reduce to 2 images; 174 total
     #fish_images = fish_images[::11]
     # for comparison to AI/ML only every fourth image:
-    fish_images = fish_images[np.arange(len(fish_images)) % 4 == 3].tolist() # DO REMOVE THIS LINE FOR FULL RUN!!!!!
+    #fish_images = fish_images[3::4] # DO REMOVE THIS LINE FOR FULL RUN!!!!!
     if DefinedFile != "all":
         fish_images = [img for img in fish_images if DefinedFile in img]
 

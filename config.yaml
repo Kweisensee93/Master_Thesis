@@ -4,7 +4,7 @@
 debug_01: false                          # Set to true to enable debug prints and visualisations
 AddInfo: false                           # Set to true to enable additional info prints of the processing
 GetInfo: true                            # Set to true to enable detailed info files
-GetImages: true                          # Set to true to enable images with contour and landmarks drawn as output
+GetImages: false                          # Set to true to enable images with contour and landmarks drawn as output
 GetContour: false                         # Set to true to enable output of contour points as CSV
 
 # Processing settings
@@ -14,10 +14,12 @@ Keep_landmarks_as_anchors: true          # If false, the landmark will be moved 
 Number_of_worst_performers_review: 5     # How many worst performing images to be reviewed as CSV
 
 # Paths
-PROJECT_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2020/Destination_Lakes_2021"
-FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021"
+#PROJECT_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2020/Destination_Lakes_2021"
+PROJECT_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2022"
+FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2022/RL_22/cropped"
 #FISH_DIR: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2025/CC_25/cropped"
-TPS_FILE: "/storage/homefs/kw23y068/Master_Thesis/TPS_copies/CC_CL_curated.TPS"
+#TPS_FILE: "/storage/homefs/kw23y068/Master_Thesis/TPS_copies/CC_CL_curated.TPS"
+TPS_FILE: "/storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2022/loop_prediction_cropped_RL_2022.tps"
 #01
 # /storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/Eckert_CC_CL_revised.TPS
 #02
@@ -32,7 +34,7 @@ TPS_FILE: "/storage/homefs/kw23y068/Master_Thesis/TPS_copies/CC_CL_curated.TPS"
 # /storage/research/iee_evol/BenSulser/2D_Morpho_Stickleback/Stickleback_2021/Destination_Lakes_2021/recipient2021_Eckert.TPS
 #OUTPUT_DIR: "/storage/scratch/iee_evol/kw23y068/Stickleback1/"
 #OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_test/rembg_savgol/"
-OUTPUT_DIR: "/storage/homefs/kw23y068/Master_Thesis_comparison/"
+OUTPUT_DIR: "/storage/homefs/kw23y068/void/vit/"
 
 KNN_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/KNN_model/"
 DL_MODEL_DIR: "/storage/homefs/kw23y068/Master_Thesis/DL_model/"
